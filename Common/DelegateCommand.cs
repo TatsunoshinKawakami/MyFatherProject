@@ -1,4 +1,4 @@
-﻿namespace MVVMCalc.Common
+﻿namespace ForMyFather.Common
 {
 	using System;
 	using System.Windows.Input;
