@@ -13,6 +13,7 @@ namespace ForMyFather.ViewModel
 		private double _upper;
 		private double _lower;
 		private double _height;
+		private double _lap;
 		private int _divNum;
 		private List<Trapezoid> _ans = new List<Trapezoid>();
 		private List<Polygon> _shapes = new List<Polygon>();
@@ -44,6 +45,15 @@ namespace ForMyFather.ViewModel
 			{
 				_height = value;
 				RaisePropertyChanged("Height");
+			}
+		}
+		public double Lap
+		{
+			get { return _lap; }
+			set
+			{
+				_lap = value;
+				RaisePropertyChanged("Lap");
 			}
 		}
 		public int DivNum
@@ -88,7 +98,7 @@ namespace ForMyFather.ViewModel
 		}
 		private void CalculateExecute()
 		{
-			Calculate cal = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _divNum);
+			Calculate cal = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _lap*10, _divNum);
 			_ans = cal.Ans;
 			List<Polygon> polies = new List<Polygon>();
 			foreach (Trapezoid trape in _ans)

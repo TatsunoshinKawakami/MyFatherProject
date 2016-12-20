@@ -6,36 +6,73 @@
         xmlns:local="clr-namespace:ForMyFather.View"
         xmlns:vm="clr-namespace:ForMyFather.ViewModel" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="500">
+        Title="MainWindow" Height="600" Width="600">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <DockPanel>
         <Canvas DockPanel.Dock="Left">
-            <StackPanel Height="23" VerticalAlignment="Top" Width="138" Orientation="Horizontal">
-                <Label Content="上底" FontSize="10"/>
-                <TextBox TextWrapping="Wrap" Text="{Binding Path=Upper}" Width="105"/>
+            <StackPanel Height="23" VerticalAlignment="Top" Width="150" Orientation="Horizontal">
+                <Label Content="左(mm)" Width="50" FontSize="10"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding Path=Upper}" Width="100"/>
             </StackPanel>
-            <StackPanel Height="23" VerticalAlignment="Top" Width="138" Orientation="Horizontal" Canvas.Top="40">
-                <Label Content="下底" FontSize="10"/>
-                <TextBox TextWrapping="Wrap" Text="{Binding Path=Lower}" Width="105"/>
+            <StackPanel Height="23" VerticalAlignment="Top" Width="150" Orientation="Horizontal" Canvas.Top="40">
+                <Label Content="右(mm)" Width="50" FontSize="10"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding Path=Lower}" Width="100"/>
             </StackPanel>
-            <StackPanel Height="23" VerticalAlignment="Top" Width="138" Orientation="Horizontal" Canvas.Top="80">
-                <Label Content="高さ" FontSize="10" Width="30"/>
-                <TextBox TextWrapping="Wrap" Text="{Binding Path=Height}" Width="105"/>
+            <StackPanel Height="23" VerticalAlignment="Top" Width="150" Orientation="Horizontal" Canvas.Top="80">
+                <Label Content="長さ(mm)" FontSize="10" Width="50"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding Path=Height}" Width="100"/>
             </StackPanel>
-            <StackPanel Height="23" VerticalAlignment="Top" Width="138" Orientation="Horizontal" Canvas.Top="120">
-                <Label Content="分割数" FontSize="10" Width="40"/>
-                <TextBox TextWrapping="Wrap" Text="{Binding Path=DivNum, UpdateSourceTrigger=PropertyChanged}" Width="96"/>
+            <StackPanel Height="23" VerticalAlignment="Top" Width="150" Orientation="Horizontal" Canvas.Top="120">
+                <Label Content="重ね(cm)" FontSize="10" Width="50"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding Path=Lap}" Width="100"/>
             </StackPanel>
-            <Button x:Name="button" Content="計算実行" Command="{Binding Path=CalculateCommand}" Width="67" Canvas.Top="160"/>
+            <StackPanel Height="23" VerticalAlignment="Top" Width="150" Orientation="Horizontal" Canvas.Top="160">
+                <Label Content="分割数" FontSize="10" Width="50"/>
+                <TextBox TextWrapping="Wrap" Text="{Binding Path=DivNum, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+            </StackPanel>
+            <Button x:Name="button" Content="計算実行" Command="{Binding Path=CalculateCommand}" Width="67" Canvas.Top="200"/>
+            <DockPanel Canvas.Left="150">
+                <TextBlock DockPanel.Dock="Top" Text="{Binding ElementName=listBox, Path=SelectedItem.Points[1].X}" HorizontalAlignment="Center" FontSize="20"/>
+                <TextBlock DockPanel.Dock="Left" Text="{Binding ElementName=listBox, Path=SelectedItem.Points[3].Y}" VerticalAlignment="Center" FontSize="20">
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <TextBlock DockPanel.Dock="Right" Text="{Binding ElementName=listBox, Path=SelectedItem.Points[2].Y}" VerticalAlignment="Center" FontSize="20">
+                    <TextBlock.LayoutTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                        </TransformGroup>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+                <Polygon DockPanel.Dock="Top" Points="{Binding ElementName=listBox, Path=SelectedItem.Points}" Stroke="Black" StrokeThickness="1" Stretch="Uniform" Width="350" Height="350"/>
+            </DockPanel>
         </Canvas>
-        <ListBox DockPanel.Dock="Right" HorizontalAlignment="Right" x:Name="listBox" ItemsSource="{Binding Path=Shapes}" MinWidth="200">
+        <ListBox DockPanel.Dock="Right" HorizontalAlignment="Right" x:Name="listBox" ItemsSource="{Binding Path=Shapes, UpdateSourceTrigger=PropertyChanged}" MinWidth="200">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <Polygon Points="{Binding Path=Points}" Stroke="{Binding Path=Stroke}" StrokeThickness="{Binding Path=StrokeThickness}" Stretch="Uniform" Width="200" Height="100"/>
-                    </StackPanel>
+                    <DockPanel>
+                        <TextBlock DockPanel.Dock="Top" Text="{Binding Path=Points[1].X}" HorizontalAlignment="Center"/>
+                        <TextBlock DockPanel.Dock="Left" Text="{Binding Path=Points[3].Y}" VerticalAlignment="Center">
+                            <TextBlock.LayoutTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="90"/>
+                                </TransformGroup>
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                        <TextBlock DockPanel.Dock="Right" Text="{Binding Path=Points[2].Y}" VerticalAlignment="Center">
+                            <TextBlock.LayoutTransform>
+                                <TransformGroup>
+                                    <RotateTransform Angle="90"/>
+                                </TransformGroup>
+                            </TextBlock.LayoutTransform>
+                        </TextBlock>
+                        <Polygon DockPanel.Dock="Top" Points="{Binding Path=Points}" Stroke="{Binding Path=Stroke}" StrokeThickness="{Binding Path=StrokeThickness}" Stretch="Uniform" Width="100" Height="100"/>
+                    </DockPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>
