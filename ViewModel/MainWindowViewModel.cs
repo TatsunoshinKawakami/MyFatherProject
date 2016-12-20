@@ -11,8 +11,8 @@ namespace ForMyFather.ViewModel
 		private double _upper;
 		private double _lower;
 		private double _height;
-		private double _divNum;
-		private List<string> _ans;
+		private int _divNum;
+		private List<Trapezoid> _ans;
 
 		private DelegateCommand _calculateCommand;
 
@@ -43,7 +43,7 @@ namespace ForMyFather.ViewModel
 				RaisePropertyChanged("Height");
 			}
 		}
-		public double DivNum
+		public int DivNum
 		{
 			get { return _divNum; }
 			set
@@ -52,7 +52,7 @@ namespace ForMyFather.ViewModel
 				RaisePropertyChanged("DivNum");
 			}
 		}
-		public List<string> Ans
+		public List<Trapezoid> Ans
 		{
 			get { return _ans; }
 			set
@@ -76,7 +76,7 @@ namespace ForMyFather.ViewModel
 		}
 		private void CalculateExecute()
 		{
-			Calculate cal = new Calculate(_upper, _lower, _height, _divNum);
+			Calculate cal = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _divNum);
 			_ans = cal.Ans;
 			RaisePropertyChanged("Ans");
 		}

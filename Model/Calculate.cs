@@ -6,18 +6,17 @@ namespace ForMyFather.Model
 {
 	class Calculate
 	{
-		private List<string> _ans = new List<string> { "上底側から出力" };
+		private List<Trapezoid> _ans = new List<Trapezoid>();
 		private double _upper;
 		private double _lower;
 		private double _height;
-		private double _divNum;
+		private int _divNum;
 
-		public List<string> Ans
+		public List<Trapezoid> Ans
 		{
 			get
 			{
-				calculate();
-				return new List<string>(_ans);
+				return new List<Trapezoid>(_ans);
 			}
 			set { _ans = value; }
 		}
@@ -36,7 +35,7 @@ namespace ForMyFather.Model
 			get { return _height; }
 			set { _height = value; }
 		}
-		public double DivNum
+		public int DivNum
 		{
 			get { return _divNum; }
 			set { _divNum = value; }
@@ -44,19 +43,25 @@ namespace ForMyFather.Model
 
 		private void calculate()
 		{
-			for(int i = 1; i < DivNum; i++)
+			double lo, up;
+			for(int i = DivNum; i > 1; i--)
 			{
-				_ans.Add(string.Format("x{0} = {1}", i, (i / DivNum) * (Lower - Upper) + Upper));
-				_ans.Add(string.Format("x{0}(delta) = {1}", i, ((i * Height / DivNum + 100) * (Lower - Upper)) / Height + Upper));
+				lo = (i / (double)DivNum) * (Lower - Upper) + Upper;
+				up = (((i - 1) * Height / (double)DivNum - 100) * (Lower - Upper)) / Height + Upper;
+				_ans.Add(new Trapezoid(up, lo, _height / DivNum + 100));
 			}
+			lo = (1 / (double)DivNum) * (Lower - Upper) + Upper;
+			up = _upper;
+			_ans.Add(new Trapezoid(up, lo, _height / _divNum));
 		}
 
-		public Calculate(double u, double l, double h, double d)
+		public Calculate(double u, double l, double h, int d)
 		{
 			_upper = u;
 			_lower = l;
 			_height = h;
 			_divNum = d;
+			calculate();
 		}
 	}
 }
