@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using ForMyFather.Common;
 using ForMyFather.Model;
+using System.Windows.Shapes;
+using System.Windows.Media;
 
 namespace ForMyFather.ViewModel
 {
@@ -12,7 +14,8 @@ namespace ForMyFather.ViewModel
 		private double _lower;
 		private double _height;
 		private int _divNum;
-		private List<Trapezoid> _ans;
+		private List<Trapezoid> _ans = new List<Trapezoid>();
+		private List<Polygon> _shapes = new List<Polygon>();
 
 		private DelegateCommand _calculateCommand;
 
@@ -61,6 +64,15 @@ namespace ForMyFather.ViewModel
 				RaisePropertyChanged("Ans");
 			}
 		}
+		public List<Polygon> Shapes
+		{
+			get	{ return _shapes; }
+			set
+			{
+				_shapes = value;
+				RaisePropertyChanged("Shapes");
+			}
+		}
 
 		public DelegateCommand CalculateCommand
 		{
@@ -78,7 +90,19 @@ namespace ForMyFather.ViewModel
 		{
 			Calculate cal = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _divNum);
 			_ans = cal.Ans;
+			List<Polygon> polies = new List<Polygon>();
+			foreach (Trapezoid trape in _ans)
+			{
+				Polygon poly = new Polygon { Stroke = Brushes.Black, StrokeThickness = 1 };
+				poly.Points.Add(new System.Windows.Point(0, 0));
+				poly.Points.Add(new System.Windows.Point(trape.Height, 0));
+				poly.Points.Add(new System.Windows.Point(trape.Height, trape.Lower));
+				poly.Points.Add(new System.Windows.Point(0, trape.Upper));
+				polies.Add(poly);
+			}
+			Shapes = new List<Polygon>(polies);
 			RaisePropertyChanged("Ans");
+			RaisePropertyChanged("Shapes");
 		}
 		private bool CanCalculateExecute()
 		{
