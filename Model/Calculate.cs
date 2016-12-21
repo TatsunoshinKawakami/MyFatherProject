@@ -20,7 +20,7 @@ namespace ForMyFather.Model
 				return new List<Trapezoid>(_ans);
 			}
 			set { _ans = value; }
-		}
+		}	  //答えのプロパティ
 
 		private void calculate()
 		{
@@ -34,7 +34,7 @@ namespace ForMyFather.Model
 			lo = (1 / (double)_divNum) * (_lower - _upper) + _upper;
 			up = _upper;
 			_ans.Add(new Trapezoid(up, lo, _height / _divNum));
-		}
+		}		 //それぞれの台形の上底、下底、高さを計算する関数
 
 		public Calculate(double u, double l, double h, double lap, int d)
 		{
@@ -44,6 +44,6 @@ namespace ForMyFather.Model
 			_lap = lap;
 			_divNum = d;
 			calculate();
-		}
-	}
+		}	 //コンストラクタ
+	}   //台形を分けるようの計算クラス
 }
