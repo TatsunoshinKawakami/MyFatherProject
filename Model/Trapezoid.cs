@@ -14,6 +14,7 @@ namespace ForMyFather.Model
 		private double _height;
 		private double _max = 1;
 		private double _displaySize = 1;
+		private int _index;
 		private Polygon _poly = new Polygon();
 		
 		public double Upper
@@ -75,6 +76,12 @@ namespace ForMyFather.Model
 			get { return _poly; }
 			set { _poly = value; }
 		}
+
+		public int Index
+		{
+			get { return _index; }
+			set { _index = value; }
+		}	//何番目の切り分けられた図形か(モデル要素に書くのはダメだと思うけど仕方ない)
 
 		public Trapezoid(double u, double l, double h)
 		{

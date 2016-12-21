@@ -130,12 +130,14 @@ namespace ForMyFather.ViewModel
 				_original.Reverse();
 
 			double maxLength = Math.Max(_ans.First().Height, _ans.First().Lower);
-			foreach (Trapezoid trape in _ans)
+			int count = _ans.Count;
+			for (int i = 1; i <= count; i++)
 			{
-				trape.Max = maxLength;
-				trape.DisplaySize = 130;
+				_ans[i - 1].Max = maxLength;
+				_ans[i - 1].DisplaySize = 130;
 				if (isReverse)
-					trape.Reverse();
+					_ans[i - 1].Reverse();
+				_ans[i - 1].Index = i;
 			}
 
 			RaisePropertyChanged("Ans");
