@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ForMyFather.View"
         xmlns:vm="clr-namespace:ForMyFather.ViewModel" 
         mc:Ignorable="d"
-        Title="重ね計算" Height="600" Width="600">
+        Title="重ね計算" Height="600" Width="700">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
