@@ -12,8 +12,8 @@
     </Window.DataContext>
 	<Grid>
 		<DockPanel>
-			<Canvas DockPanel.Dock="Left">
-				<StackPanel Height="23" VerticalAlignment="Top" Width="150" Orientation="Horizontal">
+			<Canvas DockPanel.Dock="Top" VerticalAlignment="Top" Height="240">
+				<StackPanel Height="23" VerticalAlignment="Top" Width="150" Orientation="Horizontal" Canvas.Top="0">
 					<Label Content="左(mm)" Width="50" FontSize="10"/>
 					<TextBox TextWrapping="Wrap" Text="{Binding Path=Upper, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
 				</StackPanel>
@@ -35,25 +35,6 @@
 				</StackPanel>
 				<Button x:Name="button" Content="計算実行" Command="{Binding Path=CalculateCommand}" Width="67" Canvas.Top="200"/>
 				<StackPanel Canvas.Left="150">
-					<TextBlock Text="拡大"/>
-					<DockPanel>
-						<TextBlock DockPanel.Dock="Top" Text="{Binding Path=Big.Height}" HorizontalAlignment="Center" FontSize="20"/>
-						<TextBlock DockPanel.Dock="Left" Text="{Binding Path=Big.Upper}" VerticalAlignment="Center" FontSize="20">
-							<TextBlock.LayoutTransform>
-								<TransformGroup>
-									<RotateTransform Angle="90"/>
-								</TransformGroup>
-							</TextBlock.LayoutTransform>
-						</TextBlock>
-						<TextBlock DockPanel.Dock="Right" Text="{Binding Path=Big.Lower}" VerticalAlignment="Center" FontSize="20">
-							<TextBlock.LayoutTransform>
-								<TransformGroup>
-									<RotateTransform Angle="90"/>
-								</TransformGroup>
-							</TextBlock.LayoutTransform>
-						</TextBlock>
-						<Polygon DockPanel.Dock="Top" Points="{Binding Path=Big.Poly.Points}" Stroke="Black" StrokeThickness="1"/>
-					</DockPanel>
 					<TextBlock Text="元の図形"/>
 					<DockPanel Canvas.Left="150">
 						<TextBlock DockPanel.Dock="Top" Text="{Binding Path=Original.Height}" HorizontalAlignment="Center" FontSize="20"/>
@@ -75,23 +56,23 @@
 					</DockPanel>
 				</StackPanel>
 			</Canvas>
-			<DockPanel HorizontalAlignment="Right">
+			<DockPanel DockPanel.Dock="Top" VerticalAlignment="Top">
 				<TextBlock DockPanel.Dock="Top" Text="※左右の大きい方から出力"/>
-				<ListBox x:Name="listBox" DockPanel.Dock="Top" ItemsSource="{Binding Path=Ans, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" MinWidth="200">
+				<ListBox x:Name="listBox" DockPanel.Dock="Top" ItemsSource="{Binding Path=Ans, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}" Height="250">
 					<ListBox.ItemTemplate>
 						<DataTemplate>
-							<StackPanel>
+							<StackPanel Orientation="Horizontal">
 								<TextBlock DockPanel.Dock="Left" Text="{Binding Path=Index, StringFormat={}{0}番目}"/>
 								<DockPanel>
-									<TextBlock DockPanel.Dock="Top" Text="{Binding Path=Height}" HorizontalAlignment="Center"/>
-									<TextBlock DockPanel.Dock="Left" Text="{Binding Path=Upper}" VerticalAlignment="Center" HorizontalAlignment="Center">
+									<TextBlock DockPanel.Dock="Top" Text="{Binding Path=Height, StringFormat={}{0:0.0}}" HorizontalAlignment="Center"/>
+									<TextBlock DockPanel.Dock="Left" Text="{Binding Path=Upper ,StringFormat={}{0:0.0}}" VerticalAlignment="Center" HorizontalAlignment="Center">
 										<TextBlock.LayoutTransform>
 											<TransformGroup>
 												<RotateTransform Angle="90"/>
 											</TransformGroup>
 										</TextBlock.LayoutTransform>
 									</TextBlock>
-									<TextBlock DockPanel.Dock="Right" Text="{Binding Path=Lower}" VerticalAlignment="Center">
+									<TextBlock DockPanel.Dock="Right" Text="{Binding Path=Lower, StringFormat={}{0:0.0}}" VerticalAlignment="Center">
 										<TextBlock.LayoutTransform>
 											<TransformGroup>
 												<RotateTransform Angle="90"/>
@@ -105,7 +86,7 @@
 					</ListBox.ItemTemplate>
 					<ListBox.ItemsPanel>
 						<ItemsPanelTemplate>
-							<WrapPanel Orientation="Vertical" HorizontalAlignment="Center"/>
+							<WrapPanel HorizontalAlignment="Center"/>
 						</ItemsPanelTemplate>
 					</ListBox.ItemsPanel>
 				</ListBox>

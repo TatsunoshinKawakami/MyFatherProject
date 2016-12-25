@@ -83,13 +83,13 @@ namespace ForMyFather.ViewModel
 			set
 			{
 				_selectedIndex = value;
-				if (_selectedIndex != -1)
-				{
-					_big = new Trapezoid(_ans[_selectedIndex]);
-					_big.Max = Math.Max(_original.Lower, Math.Max(_original.Height, _original.Lower));
-					_big.DisplaySize = 200;
-					RaisePropertyChanged("Big");
-				}
+				if (_selectedIndex == -1)
+					_selectedIndex = 0;
+
+				_big = new Trapezoid(_ans[_selectedIndex]);
+				_big.Max = _original.Max;
+				_big.DisplaySize = 200;
+				RaisePropertyChanged("Big");
 				RaisePropertyChanged("SelectedIndex");
 			}
 		}
@@ -126,19 +126,24 @@ namespace ForMyFather.ViewModel
 			Calculate cal = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _lap * 10, _divNum);
 			_ans = cal.Ans;
 			_original = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _lap * 10, 1).Ans.First();
+			_original.Max = Math.Max(_original.Lower, Math.Max(_original.Height, _original.Lower));
 			if (isReverse)
 				_original.Reverse();
 
-			double maxLength = Math.Max(_ans.First().Height, _ans.First().Lower);
 			int count = _ans.Count;
 			for (int i = 1; i <= count; i++)
 			{
-				_ans[i - 1].Max = maxLength;
-				_ans[i - 1].DisplaySize = 130;
+				_ans[i - 1].Max = _original.Max;
+				_ans[i - 1].DisplaySize = 200;
 				if (isReverse)
 					_ans[i - 1].Reverse();
-				_ans[i - 1].Index = i;
 			}
+
+			if (!isReverse)
+				_ans.Reverse();
+
+			for (int i = 1; i <= count; i++)
+				_ans[i - 1].Index = i;
 
 			RaisePropertyChanged("Ans");
 			RaisePropertyChanged("Original");
