@@ -26,7 +26,7 @@
 					<TextBox TextWrapping="Wrap" Text="{Binding Path=Height, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
 				</StackPanel>
 				<StackPanel Height="23" VerticalAlignment="Top" Width="150" Orientation="Horizontal" Canvas.Top="120">
-					<Label Content="重ね(cm)" FontSize="10" Width="50"/>
+					<Label Content="重ね(mm)" FontSize="10" Width="50"/>
 					<TextBox TextWrapping="Wrap" Text="{Binding Path=Lap, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
 				</StackPanel>
 				<StackPanel Height="23" VerticalAlignment="Top" Width="150" Orientation="Horizontal" Canvas.Top="160">
