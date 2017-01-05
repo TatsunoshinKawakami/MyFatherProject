@@ -93,19 +93,14 @@ namespace ForMyFather.ViewModel
 				RaisePropertyChanged("SelectedIndex");
 			}
 		}
-		public Trapezoid Big
-		{
-			get { return _big; }
-			set
-			{
-				_big = value;
-				RaisePropertyChanged("Big");
-			}
-		}
 		public Trapezoid Original
 		{
 			get { return _original; }
-			set { _original = value; }
+			set
+			{
+				_original = value;
+				RaisePropertyChanged("Original");
+			}
 		}	 //切り分ける前の状態
 
 		public DelegateCommand CalculateCommand
@@ -123,12 +118,9 @@ namespace ForMyFather.ViewModel
 		private void CalculateExecute()
 		{
 			bool isReverse = _upper > _lower;
-			Calculate cal = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _lap, _divNum);
-			_ans = cal.Ans;
-			_original = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _lap, 1).Ans.First();
-			_original.Max = Math.Max(_original.Lower, Math.Max(_original.Height, _original.Lower));
-			if (isReverse)
-				_original.Reverse();
+			_ans = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _lap, _divNum).Ans;
+			_original = new Trapezoid(_upper, _lower, _height);
+			_original.Max = Math.Max(_original.Lower, _original.Height);
 
 			int count = _ans.Count;
 			for (int i = 1; i <= count; i++)
@@ -139,7 +131,7 @@ namespace ForMyFather.ViewModel
 					_ans[i - 1].Reverse();
 			}
 
-			if (!isReverse)
+			if (isReverse)
 				_ans.Reverse();
 
 			for (int i = 1; i <= count; i++)

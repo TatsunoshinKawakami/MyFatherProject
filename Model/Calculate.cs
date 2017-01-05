@@ -20,35 +20,16 @@ namespace ForMyFather.Model
 				return new List<Trapezoid>(_ans);
 			}
 			set { _ans = value; }
-		}	  //答えのプロパティ
+		}     //答えのプロパティ
 
 		private void calculate()
 		{
-			if (_lap > 0)
+			double lo, up;
+			for (int i = 1; i <= _divNum; i++)
 			{
-				double lo, up;
-				for (int i = _divNum; i > 1; i--)
-				{
-					lo = (i / (double)_divNum) * (_lower - _upper) + _upper;
-					up = (((i - 1) * _height / (double)_divNum - _lap) * (_lower - _upper)) / _height + _upper;
-					_ans.Add(new Trapezoid(up, lo, _height / _divNum + _lap));
-				}
-				lo = (1 / (double)_divNum) * (_lower - _upper) + _upper;
-				up = _upper;
-				_ans.Add(new Trapezoid(up, lo, _height / _divNum));
-			}
-			else
-			{
-				double lo, up;
-				for (int i = _divNum; i > 1; i--)
-				{
-					lo = (i / (double)_divNum) * (_lower - _upper) + _upper;
-					up = (((i - 1) * _height / (double)_divNum - _lap) * (_lower - _upper)) / _height + _upper;
-					_ans.Add(new Trapezoid(up, lo, _height / _divNum + 100));
-				}
-				lo = (1 / (double)_divNum) * (_lower - _upper) + _upper;
-				up = _upper;
-				_ans.Add(new Trapezoid(up, lo, _height / _divNum));
+				lo = ((i / (double)_divNum) * _height + _lap) / _height * (_lower - _upper) + _upper;
+				up = (i - 1) / (double)_divNum * (_lower - _upper) + _upper;
+				_ans.Add(new Trapezoid(up, lo, _height / _divNum + _lap));
 			}
 		}		 //それぞれの台形の上底、下底、高さを計算する関数
 
