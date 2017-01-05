@@ -11,19 +11,17 @@ namespace ForMyFather.ViewModel
 {
 	class MainWindowViewModel : ViewModelBase
 	{
-		private double _upper;
-		private double _lower;
-		private double _height;
-		private double _lap;
-		private int _divNum;
+		private double? _upper;
+		private double? _lower;
+		private double? _height;
+		private double? _lap;
+		private int? _divNum;
 		private Trapezoid _original;
-		private int _selectedIndex;
-		private Trapezoid _big;
-		private List<Trapezoid> _ans = new List<Trapezoid>();
+		private List<Trapezoid> _ans;
 
 		private DelegateCommand _calculateCommand;
 
-		public double Upper
+		public double? Upper
 		{
 			get { return _upper; }
 			set
@@ -32,7 +30,7 @@ namespace ForMyFather.ViewModel
 				RaisePropertyChanged("Upper");
 			}
 		}   //両端の短い方の辺(台形における上底)
-		public double Lower
+		public double? Lower
 		{
 			get { return _lower; }
 			set
@@ -41,7 +39,7 @@ namespace ForMyFather.ViewModel
 				RaisePropertyChanged("Lower");
 			}
 		}   //両端の長い方の辺(台形における下底)
-		public double Height
+		public double? Height
 		{
 			get { return _height; }
 			set
@@ -50,7 +48,7 @@ namespace ForMyFather.ViewModel
 				RaisePropertyChanged("Height");
 			}
 		}	//長さ(台形における高さ)
-		public double Lap
+		public double? Lap
 		{
 			get { return _lap; }
 			set
@@ -59,7 +57,7 @@ namespace ForMyFather.ViewModel
 				RaisePropertyChanged("Lap");
 			}
 		}	 //重ね
-		public int DivNum
+		public int? DivNum
 		{
 			get { return _divNum; }
 			set
@@ -75,22 +73,6 @@ namespace ForMyFather.ViewModel
 			{
 				_ans = value;
 				RaisePropertyChanged("Ans");
-			}
-		}	  //答えは多角形
-		public int SelectedIndex
-		{
-			get { return _selectedIndex; }
-			set
-			{
-				_selectedIndex = value;
-				if (_selectedIndex == -1)
-					_selectedIndex = 0;
-
-				_big = new Trapezoid(_ans[_selectedIndex]);
-				_big.Max = _original.Max;
-				_big.DisplaySize = 200;
-				RaisePropertyChanged("Big");
-				RaisePropertyChanged("SelectedIndex");
 			}
 		}
 		public Trapezoid Original
@@ -118,15 +100,15 @@ namespace ForMyFather.ViewModel
 		private void CalculateExecute()
 		{
 			bool isReverse = _upper > _lower;
-			_ans = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _lap, _divNum).Ans;
-			_original = new Trapezoid(_upper, _lower, _height);
+			_ans = new Calculate(Math.Min(_upper??-1, _lower??-1), Math.Max(_upper??0, _lower??0), _height??0, _lap??0, _divNum??1).Ans;
+			_original = new Trapezoid(_upper??0, _lower??0, _height??0);
 			_original.Max = Math.Max(_original.Lower, _original.Height);
 
 			int count = _ans.Count;
 			for (int i = 1; i <= count; i++)
 			{
 				_ans[i - 1].Max = _original.Max;
-				_ans[i - 1].DisplaySize = 200;
+				_ans[i - 1].DisplaySize = 300;
 				if (isReverse)
 					_ans[i - 1].Reverse();
 			}
