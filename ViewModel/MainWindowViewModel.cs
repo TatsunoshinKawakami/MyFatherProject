@@ -123,9 +123,9 @@ namespace ForMyFather.ViewModel
 		private void CalculateExecute()
 		{
 			bool isReverse = _upper > _lower;
-			Calculate cal = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _lap * 10, _divNum);
+			Calculate cal = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _lap, _divNum);
 			_ans = cal.Ans;
-			_original = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _lap * 10, 1).Ans.First();
+			_original = new Calculate(Math.Min(_upper, _lower), Math.Max(_upper, _lower), _height, _lap, 1).Ans.First();
 			_original.Max = Math.Max(_original.Lower, Math.Max(_original.Height, _original.Lower));
 			if (isReverse)
 				_original.Reverse();
