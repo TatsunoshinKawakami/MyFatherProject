@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace ForMyFather.Model
 {
-	class Trapezoid
+	public class Trapezoid
 	{
 		private double _upper;
 		private double _lower;

@@ -34,6 +34,7 @@
 					<TextBox TextWrapping="Wrap" Text="{Binding Path=DivNum, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
 				</StackPanel>
 				<Button x:Name="button" Content="計算実行" Command="{Binding Path=CalculateCommand}" Width="67" Canvas.Top="200"/>
+				<Button Content="印刷" Command="{Binding Path=PrintCommand}" Width="67" Canvas.Top="230"/>
 				<StackPanel Canvas.Left="150">
 					<TextBlock Text="元の図形"/>
 					<DockPanel Canvas.Left="150">
@@ -62,7 +63,7 @@
 					<ListBox.ItemTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
-								<TextBlock DockPanel.Dock="Left" Text="{Binding Path=Index, StringFormat={}{0}番目}"/>
+								<TextBlock Text="{Binding Path=Index, StringFormat={}{0}番目}"/>
 								<DockPanel>
 									<TextBlock DockPanel.Dock="Top" Text="{Binding Path=Height, StringFormat={}{0:0.0}}" HorizontalAlignment="Center"/>
 									<TextBlock DockPanel.Dock="Left" Text="{Binding Path=Upper ,StringFormat={}{0:0.0}}" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -91,6 +92,7 @@
 					</ListBox.ItemsPanel>
 				</ListBox>
 			</DockPanel>
+			
 		</DockPanel>
 	</Grid>
 </Window>

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using ForMyFather.Common;
 using ForMyFather.Model;
-using System.Windows.Shapes;
-using System.Windows.Media;
-using System.Windows;
+
+using System.Printing;
+using System.Windows.Xps;
+using System.Windows.Documents;
+using System.Windows.Controls;
 
 namespace ForMyFather.ViewModel
 {
-	class MainWindowViewModel : ViewModelBase
+	public class MainWindowViewModel : ViewModelBase
 	{
 		private double? _upper;
 		private double? _lower;
@@ -20,6 +22,7 @@ namespace ForMyFather.ViewModel
 		private List<Trapezoid> _ans;
 
 		private DelegateCommand _calculateCommand;
+		private DelegateCommand _printCommand;
 
 		public double? Upper
 		{
@@ -126,5 +129,18 @@ namespace ForMyFather.ViewModel
 		{
 			return DivNum != 0;
 		}	  //0では割れない
+
+		public DelegateCommand PrintCommand
+		{
+			get
+			{
+				return this._printCommand ?? (this._printCommand = new DelegateCommand(this.Print));
+			}
+		}
+
+		private void Print()
+		{
+			Printer.Print(this);
+		}
 	}
 }
