@@ -105,7 +105,7 @@ namespace ForMyFather.ViewModel
 			bool isReverse = _upper > _lower;
 			_ans = new Calculate(Math.Min(_upper??-1, _lower??-1), Math.Max(_upper??0, _lower??0), _height??0, _lap??0, _divNum??1).Ans;
 			_original = new Trapezoid(_upper??0, _lower??0, _height??0);
-			_original.Max = Math.Max(_original.Lower, _original.Height);
+			_original.Max = Math.Max(Math.Max(_original.Lower, _original.Upper), _original.Height);
 
 			int count = _ans.Count;
 			for (int i = 1; i <= count; i++)
