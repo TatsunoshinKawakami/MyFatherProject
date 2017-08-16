@@ -9,6 +9,10 @@ using System.Windows.Xps;
 using System.Windows.Documents;
 using System.Windows.Controls;
 
+using System.IO;
+using System.Windows;
+using Microsoft.Win32;
+
 namespace ForMyFather.ViewModel
 {
 	public class MainWindowViewModel : ViewModelBase
@@ -23,6 +27,7 @@ namespace ForMyFather.ViewModel
 
 		private DelegateCommand _calculateCommand;
 		private DelegateCommand _printCommand;
+        private DelegateCommand _saveCommanad;
 
 		public double? Upper
 		{
@@ -111,7 +116,8 @@ namespace ForMyFather.ViewModel
 			for (int i = 1; i <= count; i++)
 			{
 				_ans[i - 1].Max = _original.Max;
-				_ans[i - 1].DisplaySize = 300;
+				_ans[i - 1].DisplaySize = 600;
+                _ans[i - 1].PrintSize = 200;
 				if (isReverse)
 					_ans[i - 1].Reverse();
 			}
@@ -137,10 +143,22 @@ namespace ForMyFather.ViewModel
 				return this._printCommand ?? (this._printCommand = new DelegateCommand(this.Print));
 			}
 		}
-
-		private void Print()
+        private void Print()
 		{
 			Printer.Print(this);
 		}
+
+        public DelegateCommand SaveCommand
+        {
+            get { return this._saveCommanad ?? (this._saveCommanad = new DelegateCommand(Save)); }
+        }
+        private void Save()
+        {
+            var dialog = new SaveFileDialog();
+            dialog.Title = "図形を保存";
+            dialog.Filter = "XPSファイル|*.xps";
+            if (dialog.ShowDialog() == true)
+                SaveGraph.Save(this, dialog.FileName);
+        }
 	}
 }

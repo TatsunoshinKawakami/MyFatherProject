@@ -23,5 +23,5 @@ namespace ForMyFather.View
 		{
 			InitializeComponent();
 		}
-	}
+    }
 }

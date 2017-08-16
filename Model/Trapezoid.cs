@@ -14,8 +14,10 @@ namespace ForMyFather.Model
 		private double _height;
 		private double _max = 1;
 		private double _displaySize = 1;
+        private double _printSize = 1;
 		private int _index;
 		private Polygon _poly = new Polygon();
+        private Polygon _polyToPrint = new Polygon();
 		
 		public double Upper
 		{
@@ -41,7 +43,12 @@ namespace ForMyFather.Model
 			_poly.Points[1] = new Point(_height / _max * _displaySize, 0);
 			_poly.Points[2] = new Point(_height / _max * _displaySize, _lower / _max * _displaySize);
 			_poly.Points[3] = new Point(0, _upper / _max * _displaySize);
-		}
+        }
+
+        private void calToPrint()
+        {
+            _polyToPrint.Points = new PointCollection(Poly.Points.Select(x => new Point(x.X / DisplaySize * PrintSize, x.Y / DisplaySize * PrintSize)));
+        }
 
 		public double Max
 		{
@@ -63,6 +70,16 @@ namespace ForMyFather.Model
 			}
 		}
 
+        public double PrintSize
+        {
+            get { return _printSize; }
+            set
+            {
+                _printSize = value;
+                calToPrint();
+            }
+        }
+
 		public void Reverse()
 		{
 			double up = _upper;
@@ -76,6 +93,12 @@ namespace ForMyFather.Model
 			get { return _poly; }
 			set { _poly = value; }
 		}
+
+        public Polygon PolyToPrint
+        {
+            get { return _polyToPrint; }
+            set { _polyToPrint = value; }
+        }
 
 		public int Index
 		{
